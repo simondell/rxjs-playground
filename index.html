@@ -2,11 +2,59 @@
 <html>
 <head>
 	<title>my first rx page</title>
+
+	<style>
+	ol, li, input, button {
+		padding: 0;
+		margin: 0;
+	}
+
+	[role="application"] ol {
+		overflow: hidden;
+		scroll: auto;
+		width: 298px;
+		height: 298px;
+		border: 1px solid grey;
+	}
+
+	[role="application"] form {
+		width: 292px;
+		padding: 4px;
+		background-color: grey;
+ 	}
+
+	[role="application"] input,
+	[role="application"] button {
+		height: 2em;
+		line-height: 2;
+		border: 0;
+		vertical-align: middle;
+	}
+	
+	[role="application"] input {
+		width: 230px;
+		padding: 0 4px;
+		margin-right: 4px; 
+	}
+
+	[role="application"] button {
+		width: 50px;
+		background-color: white;
+	}
+		
+	</style>
+
+
 </head>
 
 <body>
-	<h1>An RX playground</h1>
-	<ol id="console"></ol>
+	<main role="application">
+		<h1>An RX playground</h1>
+		<ol></ol>
+		<form action="index.html" name="send-messages">
+			<input type="text" name="msg"><button name="send">Send</button>
+		</form>
+	</main>
 
 	<script src="/socket.io/socket.io.js"></script>
 	<script>
