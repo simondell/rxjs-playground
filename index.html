@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>my first rx page</title>
+</head>
+
+<body>
+	<h1>An RX playground</h1>
+	<ol id="console"></ol>
+
+	<script src="/socket.io/socket.io.js"></script>
+	<script>
+		var socket = io();
+	</script>
+
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/4.0.8/rx.all.js"></script>
+	<script>
+	var numbers = [1,2,3,4,53, 2354, 13, 32, 1325,132,4659087,37,972,76729];
+	var numbersStream = Rx.Observable.from( numbers );
+	
+	var log = (function log ( item ) {
+		var old_content = this.innerHTML;
+		var new_content = '<li>' + item.toString() + '</li>'; 
+		this.innerHTML = old_content + new_content;
+	}).bind( document.querySelector( '#console' ) );
+	
+	function onlyEvens ( num ) {
+		return num % 2 === 0;
+	}
+	
+	function onlyOdds ( num ) {
+		return num % 2 !== 0;
+	}
+	
+	numbersStream.
+		filter( onlyEvens ).
+		subscribe( log );
+
+	numbersStream.
+		filter( onlyOdds ).
+		subscribe( log );
+
+	</script>
+</body>
+
+</html>
