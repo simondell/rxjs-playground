@@ -41,7 +41,6 @@
 		width: 50px;
 		background-color: white;
 	}
-		
 	</style>
 
 
@@ -59,6 +58,16 @@
 	<script src="/socket.io/socket.io.js"></script>
 	<script>
 		var socket = io();
+		var msg_form = document.querySelector( '[name="send-messages"]' );
+
+		var handleMessageSubmit = function handleMessageSubmit ( event ) {
+			socket.emit('chat message', this.value );
+    	this.value = '';
+			event.preventDefault();
+			return false;
+		}.bind( msg_form.querySelector( 'input' ) );
+
+		msg_form.addEventListener( 'submit', handleMessageSubmit );
 	</script>
 
 
