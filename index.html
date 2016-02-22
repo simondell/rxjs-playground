@@ -10,8 +10,7 @@
 	}
 
 	[role="application"] ol {
-		overflow: hidden;
-		scroll: auto;
+		overflow: scroll;
 		width: 298px;
 		height: 298px;
 		border: 1px solid grey;
@@ -59,45 +58,28 @@
 	<script>
 		var socket = io();
 		var msg_form = document.querySelector( '[name="send-messages"]' );
+		var new_msg = msg_form.querySelector( 'input' ); 
+		var messages_display = document.querySelector( '[role="application"] ol' );
 
-		var handleMessageSubmit = function handleMessageSubmit ( event ) {
+		// sending
+		function handleMessageSubmit ( event ) {
 			socket.emit('chat message', this.value );
     	this.value = '';
 			event.preventDefault();
 			return false;
-		}.bind( msg_form.querySelector( 'input' ) );
+		};
 
-		msg_form.addEventListener( 'submit', handleMessageSubmit );
-	</script>
+		msg_form.addEventListener( 'submit', handleMessageSubmit.bind( new_msg ) );
 
 
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/4.0.8/rx.all.js"></script>
-	<script>
-	var numbers = [1,2,3,4,53, 2354, 13, 32, 1325,132,4659087,37,972,76729];
-	var numbersStream = Rx.Observable.from( numbers );
-	
-	var log = (function log ( item ) {
-		var old_content = this.innerHTML;
-		var new_content = '<li>' + item.toString() + '</li>'; 
-		this.innerHTML = old_content + new_content;
-	}).bind( document.querySelector( '#console' ) );
-	
-	function onlyEvens ( num ) {
-		return num % 2 === 0;
-	}
-	
-	function onlyOdds ( num ) {
-		return num % 2 !== 0;
-	}
-	
-	numbersStream.
-		filter( onlyEvens ).
-		subscribe( log );
+		// receiving
+		function handleMessageRecieved ( msg ) {
+			var old_content = this.innerHTML;
+			var new_content = '<li>' + msg + '</li>';
+			this.innerHTML = old_content + new_content;
+		};
 
-	numbersStream.
-		filter( onlyOdds ).
-		subscribe( log );
-
+		socket.on('chat message', handleMessageRecieved.bind( messages_display ) );		
 	</script>
 </body>
 
