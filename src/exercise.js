@@ -1,9 +1,9 @@
 "use strict";
-const suggestions_list = document.querySelector( 'ul' );
-
+// clicking
 const refreshButton = document.querySelector('button');
 const refreshClickStream = Rx.Observable.fromEvent(refreshButton, 'click');
 
+// making requests
 var requestStream = refreshClickStream
   // this `startWith()` would not work in typescript
   .startWith('it does not matter what goes here')
@@ -13,22 +13,15 @@ var requestStream = refreshClickStream
     return 'https://api.github.com/users?since=' + randomOffset;
   });
 
+// listening to responses
 var responseStream = requestStream
   .flatMap(function(requestUrl) {
     return Rx.Observable.fromPromise(jQuery.getJSON(requestUrl));
   });
 
-responseStream.subscribe(function(response) {
-  console.log( response );
+responseStream.subscribe( ( response ) => console.log( response ) );
 
-  // const user_tmpl = document.querySelector('#user');
-
-  // user_tmpl.content.querySelector( 'li').textContent = response.length;
-
-  // const new_li = document.importNode( user_tmpl.content, true );
-  // suggestions_list.appendChild( new_li );
-});
-
+// drawing responses
 function pickRandomUser ( usersList ) {
 	return usersList[Math.floor(Math.random()*usersList.length)];
 }
