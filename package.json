@@ -1,0 +1,20 @@
+{
+  "name": "rx-playground",
+  "version": "0.0.1",
+  "description": "Following the Staltz tutorial",
+  "dependencies": {},
+  "scripts": {
+    "serve": "livereloadx -s build/",
+    "build": "browserify src/exercise.js -t babelify --outfile build/index.js",
+    "watch": "watchify src/exercise.js -t babelify --outfile build/index.js"
+  },
+  "devDependencies": {
+    "babel": "^6.5.2",
+    "babel-eslint": "^5.0.0",
+    "babelify": "^7.2.0",
+    "browserify": "^13.0.0",
+    "eslint": "^2.2.0",
+    "livereloadx": "^0.3.9",
+    "watchify": "^3.7.0"
+  }
+}
