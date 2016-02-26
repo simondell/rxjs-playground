@@ -45,5 +45,6 @@ const song_views = [0,1,2].map( index => {
 		map( data => data.results ).
 		map( pickRandomSong ).
 		merge( refreshClickStream.map(function(){ return null; }) ).
+		startWith( null ).
 		subscribe( renderSong.bind( elem[ index ] ) );
 });
