@@ -8,74 +8,39 @@ var requestStream = refreshClickStream
   // this `startWith()` would not work in typescript
   .startWith('it does not matter what goes here')
   .map(function( thing ) {
-    console.log( thing );
+console.log( thing );
     var randomOffset = Math.floor(Math.random()*500);
-    return 'https://api.github.com/users?since=' + randomOffset;
+    return 'https://itunes.apple.com/search?term=pink floyd';
   });
 
 // listening to responses
 var responseStream = requestStream
   .flatMap(function(requestUrl) {
-    return Rx.Observable.fromPromise(jQuery.getJSON(requestUrl));
+    const the_promise_of_data = jQuery.ajax({
+    	url: requestUrl,
+    	jsonp: 'callback',
+    	dataType: 'jsonp'
+    });
+    return Rx.Observable.fromPromise( the_promise_of_data );
   });
 
+//log
 responseStream.subscribe( ( response ) => console.log( response ) );
 
 // drawing responses
-function pickRandomUser ( usersList ) {
-	return usersList[Math.floor(Math.random()*usersList.length)];
+function pickRandomSong ( songsList ) {
+	return songsList[Math.floor(Math.random()*songsList.length)];
 }
 
-const suggestion1Stream = responseStream.
-	map( pickRandomUser ).
-	subscribe( user => {
-		const li = document.querySelectorAll( 'ul li' )[0];
-		li.textContent = user.login;
-	});
+function renderSong ( song ) {
+	this.textContent = `"${ song.trackName }" by ${ song.artistName }`;
+}
 
-const suggestion2Stream = responseStream.
-	map( pickRandomUser ).
-	subscribe( user => {
-		const li = document.querySelectorAll( 'ul li' )[1];
-		li.textContent = user.login;
-	});
-
-const suggestion3Stream = responseStream.
-	map( pickRandomUser ).
-	subscribe( user => {
-		const li = document.querySelectorAll( 'ul li' )[2];
-		li.textContent = user.login;
-	});
-
-
-
-
-// class SuggestionElement {
-// 	constructor ( elem ) {
-// 		this.elem = elem;
-// 	}
-
-// 	render ( data ) {
-// 		this.elem.textContent = data.login;
-// 	}
-// }
-
-// var suggestionIndeces = [0, 1, 2];
-
-// var suggestionViews = suggestionIndeces.map( index => {
-// 	new SuggestionElement( document.querySelectorAll( 'ul li' )[ index ] );
-// });
-
-// var suggestionSubscriptions = suggestionIndeces.map( index => {
-// 	responseStream.map(function(listUsers) {
-// 		// get one random user from the list
-// 		return listUsers[Math.floor(Math.random()*listUsers.length)];
-// 	});
-// });
-
-// suggestionSubscriptions.forEach( ( suggestionSubscription, index ) => {
-// console.log( index, suggestionSubscription );
-// 	suggestionSubscription.subscribe( user => {
-// 		suggestionViews[ index ].render( user );
-// 	});
-// });
+// views
+const elem = document.querySelectorAll( 'ul li' );
+const song_views = [0,1,2].map( index => {
+	responseStream.
+		map( data => data.results ).
+		map( pickRandomSong ).
+		subscribe( renderSong.bind( elem[ index ] ) );
+});
