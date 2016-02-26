@@ -33,7 +33,9 @@ function pickRandomSong ( songsList ) {
 }
 
 function renderSong ( song ) {
-	this.textContent = `"${ song.trackName }" by ${ song.artistName }`;
+	this.textContent = song
+		? `"${ song.trackName }" by ${ song.artistName }`
+		: '-';
 }
 
 // views
@@ -42,5 +44,6 @@ const song_views = [0,1,2].map( index => {
 	responseStream.
 		map( data => data.results ).
 		map( pickRandomSong ).
+		merge( refreshClickStream.map(function(){ return null; }) ).
 		subscribe( renderSong.bind( elem[ index ] ) );
 });
