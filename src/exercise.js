@@ -4,17 +4,10 @@ const refreshButton = document.querySelector('button');
 const refreshClickStream = Rx.Observable.fromEvent(refreshButton, 'click');
 
 // making requests
-var requestStream = refreshClickStream
+var responseStream = refreshClickStream
   // this `startWith()` would not work in typescript
   .startWith('it does not matter what goes here')
-  .map(function( thing ) {
-console.log( thing );
-    var randomOffset = Math.floor(Math.random()*500);
-    return 'https://itunes.apple.com/search?term=pink floyd';
-  });
-
-// listening to responses
-var responseStream = requestStream
+  .map( _ => 'https://itunes.apple.com/search?term=pink floyd' )
   .flatMap(function(requestUrl) {
     const the_promise_of_data = jQuery.ajax({
     	url: requestUrl,
@@ -22,7 +15,11 @@ var responseStream = requestStream
     	dataType: 'jsonp'
     });
     return Rx.Observable.fromPromise( the_promise_of_data );
-  });
+  })
+  .map( data => data.results )
+  .do( _ => console.log( 'Executing response stream') )
+  .share();
+
 
 //log
 responseStream.subscribe( ( response ) => console.log( response ) );
@@ -39,12 +36,19 @@ function renderSong ( song ) {
 }
 
 // views
-const elem = document.querySelectorAll( 'ul li' );
-const song_views = [0,1,2].map( index => {
-	responseStream.
-		map( data => data.results ).
-		map( pickRandomSong ).
-		merge( refreshClickStream.map(function(){ return null; }) ).
-		startWith( null ).
-		subscribe( renderSong.bind( elem[ index ] ) );
+const elems = [].slice.call( document.querySelectorAll( 'ul li' ) );
+const song_views = elems.map( ( elem, index ) => {
+	const song_view_click_stream = Rx.Observable.fromEvent( elem, 'click' )
+		.startWith( null );
+
+	const song_stream = 	responseStream
+		.combineLatest( song_view_click_stream, ( songs, _ ) => songs )
+		.map( pickRandomSong );
+
+	const data_stream = song_stream
+		.merge( refreshClickStream.map( _ => null ) )
+		.startWith( null );
+
+	const render_sub = data_stream
+		.subscribe( renderSong.bind( elem ) );
 });
