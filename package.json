@@ -5,16 +5,18 @@
   "dependencies": {},
   "scripts": {
     "serve": "livereloadx -s build/",
-    "build": "browserify src/exercise.js -t babelify --outfile build/index.js",
-    "watch": "watchify src/exercise.js -t babelify --outfile build/index.js"
+    "build": "browserify src/exercise.ts -p tsify --outfile build/index.js",
+    "watch": "watchify src/exercise.ts -p tsify --outfile build/index.js"
   },
   "devDependencies": {
-    "babel": "^6.5.2",
     "babel-eslint": "^5.0.0",
-    "babelify": "^7.2.0",
     "browserify": "^13.0.0",
     "eslint": "^2.2.0",
     "livereloadx": "^0.3.9",
+    "tsd": "^0.6.5",
+    "tsify": "^0.13.2",
+    "typescript": "^1.8.2",
+    "typings": "^0.6.8",
     "watchify": "^3.7.0"
   }
 }

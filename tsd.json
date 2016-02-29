@@ -1,0 +1,66 @@
+{
+  "version": "v4",
+  "repo": "borisyankov/DefinitelyTyped",
+  "ref": "master",
+  "path": "typings",
+  "bundle": "typings/tsd.d.ts",
+  "installed": {
+    "rx/rx.all.d.ts": {
+      "commit": "c0d876601e0f8236fd6b57626eb62c4e485f1563"
+    },
+    "rx/rx.time-lite.d.ts": {
+      "commit": "c0d876601e0f8236fd6b57626eb62c4e485f1563"
+    },
+    "rx/rx.aggregates.d.ts": {
+      "commit": "c0d876601e0f8236fd6b57626eb62c4e485f1563"
+    },
+    "rx/rx.time.d.ts": {
+      "commit": "c0d876601e0f8236fd6b57626eb62c4e485f1563"
+    },
+    "rx/rx.async-lite.d.ts": {
+      "commit": "c0d876601e0f8236fd6b57626eb62c4e485f1563"
+    },
+    "rx/rx.binding.d.ts": {
+      "commit": "c0d876601e0f8236fd6b57626eb62c4e485f1563"
+    },
+    "rx/rx.async.d.ts": {
+      "commit": "c0d876601e0f8236fd6b57626eb62c4e485f1563"
+    },
+    "rx/rx.binding-lite.d.ts": {
+      "commit": "c0d876601e0f8236fd6b57626eb62c4e485f1563"
+    },
+    "rx/rx.coincidence.d.ts": {
+      "commit": "c0d876601e0f8236fd6b57626eb62c4e485f1563"
+    },
+    "rx/rx.coincidence-lite.d.ts": {
+      "commit": "c0d876601e0f8236fd6b57626eb62c4e485f1563"
+    },
+    "rx/rx.joinpatterns.d.ts": {
+      "commit": "c0d876601e0f8236fd6b57626eb62c4e485f1563"
+    },
+    "rx/rx.virtualtime.d.ts": {
+      "commit": "c0d876601e0f8236fd6b57626eb62c4e485f1563"
+    },
+    "rx/rx.d.ts": {
+      "commit": "c0d876601e0f8236fd6b57626eb62c4e485f1563"
+    },
+    "rx/rx.backpressure-lite.d.ts": {
+      "commit": "c0d876601e0f8236fd6b57626eb62c4e485f1563"
+    },
+    "rx/rx-lite.d.ts": {
+      "commit": "c0d876601e0f8236fd6b57626eb62c4e485f1563"
+    },
+    "rx/rx.experimental.d.ts": {
+      "commit": "c0d876601e0f8236fd6b57626eb62c4e485f1563"
+    },
+    "rx/rx.backpressure.d.ts": {
+      "commit": "c0d876601e0f8236fd6b57626eb62c4e485f1563"
+    },
+    "rx/rx.testing.d.ts": {
+      "commit": "c0d876601e0f8236fd6b57626eb62c4e485f1563"
+    },
+    "jquery/jquery.d.ts": {
+      "commit": "c0d876601e0f8236fd6b57626eb62c4e485f1563"
+    }
+  }
+}
