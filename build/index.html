@@ -1,9 +1,25 @@
 <!DOCTYPE html>
 <style>
+	input {
+		font-size: 2em;
+	}
+
+	label {
+		display: block;
+	}
+
+	[type="submit"] {
+		display: none;
+	}
+
 	ul {
 		list-style: none;
 	}
 </style>
+<form action="get" name="search">
+	<label for="term">Please enter a band or musician you particularly enjoy:</label>
+	<input type="text" id="term" name="term" value="Pink Floyd"><input type="submit">
+</form>
 <ul>
 	<li></li>
 	<li></li>
