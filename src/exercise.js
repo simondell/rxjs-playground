@@ -3,12 +3,21 @@
 const refreshButton = document.querySelector('button');
 const refreshClickStream = Rx.Observable.fromEvent(refreshButton, 'click');
 
+const term_input = document.querySelector( '[name="term"]' );
+const requestStream = Rx.Observable.fromEvent( term_input , 'keypress' )
+	.debounce( 500 )
+	.map( event => event.target.value )
+	.filter( term => term.length > 3 )
+	.map( term => `https://itunes.apple.com/search?term=${ term }` )
+	.do( term => console.log( term ) );
+
+
 // making requests
 var responseStream = refreshClickStream
-  // this `startWith()` would not work in typescript
   .startWith('it does not matter what goes here')
-  .map( _ => 'https://itunes.apple.com/search?term=pink floyd' )
-  .flatMap(function(requestUrl) {
+  // .map( _ => 'https://itunes.apple.com/search?term=pink floyd' )
+  .combineLatest( requestStream, ( _, requestUrl ) => requestUrl )
+  .flatMap( requestUrl => {
     const the_promise_of_data = jQuery.ajax({
     	url: requestUrl,
     	jsonp: 'callback',
